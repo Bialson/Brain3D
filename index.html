@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/icon.png">
+    <title>Brain3D</title>
+  </head>  
+<body>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            color: rgb(255, 255, 255);
+            font-family: sans-serif, 'Poppins';
+        }
+        .video{
+            min-width: 100%;
+            min-height: 100%;
+            position: fixed;
+        }
+        .splash-container{
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100vh;
+        }
+        .splash{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items:center;
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border-radius: 5px;
+        }
+        .splash > p {
+            font-size: 30px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .start{
+            padding: 20px 10px;
+            background-color: rgba(0, 145, 255, 0.3);
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 107.8px;
+            transition: width 0.5s, padding 0.5s;
+        }
+        .bi-arrow-right{
+            animation: outStart 0.5s linear forwards;
+            transform: scale(1.5);
+            margin: 0 20px 0 10px;
+            position: relative;
+        }
+        .start:hover{
+            transition: 0.3s ease-in-out;
+            background-color: rgba(0, 145, 255, 0.8);
+        }
+        .start:hover .bi-arrow-right{
+            display: block;
+            animation: animStart 0.5s ease-in-out forwards;
+        }
+        .start:hover{
+            padding: 20px 30px;
+        }
+        @keyframes animStart{
+            from{
+                left: -20px;
+                opacity: 0;
+                display: none;
+            }
+            to{
+                display: block;
+                left: 0px;
+                opacity: 1;
+            }
+        }
+        @keyframes outStart{
+            from{
+                left: 0px;
+                opacity: 1;}
+            to{
+                opacity: 0;
+                left: -20px;
+                width: 0;
+                height: 0;
+            }
+        }
+        .traingle-container{
+            position: absolute;
+            width: 420px;
+            height: 0;
+            border-left: 300px solid transparent;
+            border-bottom: 100vh solid rgba(1, 1, 1, 0.85); 
+        }
+        .info{
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            align-self: flex-end;
+            margin-right: 20px;
+        }
+        .info::before{
+            content: '';
+            position: absolute;
+            border-radius: 40px;
+            width: 150px;
+            height: 35px;
+            z-index: -1;
+            transform-origin: right;
+        }
+        .info span{
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 145, 255, 0.8);
+            padding: 5px;
+            border-radius: 50%;
+            transition: 0.5s ease-in-out all;
+        }
+        .info .bi-chevron-right{
+            width: 20px;
+            height: 20px;
+            animation: infoArrowOut 0.5s ease-in-out forwards;
+        }
+        .info:hover .bi-chevron-right{
+            display: block;
+            animation: infoArrowIn 0.5s ease-in-out forwards;
+        }
+        .info:hover::before{
+            animation: infoArrowBg 0.5s ease-in-out forwards;
+        }
+        .info:hover span{
+            background-color: transparent;
+        }
+        @keyframes infoArrowIn{
+            from{transform: rotate(0deg);}
+            to{transform: rotate(180deg);}
+        }
+        @keyframes infoArrowOut{
+            from{transform: rotate(180deg);}
+            to{transform: rotate(0deg);}
+        }
+        @keyframes infoArrowBg{
+            from{transform: scaleX(0);}
+            to{transform: scaleX(100px);background-color: rgba(0, 145, 255, 0.8)}
+        }
+        .about{
+            position: absolute;
+            width: 500px;
+            height: 700px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            padding: 20px;
+            top: 220px;
+        }
+        @keyframes showAbout{
+            from{opacity: 0; right: -100px;}
+            to{opacity: 1; right: 0;}
+        }
+        @keyframes hideSplash{
+            from{opacity: 1; right: 0;}
+            to{opacity: 0; right: 100px;}
+        }
+        @keyframes hideAbout{
+            from{opacity: 1;right: 0;}
+            to{opacity: 0; right: -100px;}
+        }
+        @keyframes showSplash{
+            from{opacity: 0; right: 100px;}
+            to{opacity: 1; right: 0;}
+        }
+        .bi-x-lg{
+            width: 30px;
+            height: 30px;
+            align-self: flex-end;
+        }
+        .bi-x-lg:hover{fill: red;transition: 0.5s all;cursor: pointer;}
+        .buttons{
+            width: 100%;
+            position: absolute;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .returnHome{
+            margin: 10px 0 0 10px;
+            background-color: rgba(1, 1, 1, 0.6); 
+            border-radius: 10px;
+            justify-content: space-around;
+            align-items: center;
+            overflow-x: hidden;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            padding: 0 10px;
+            transition: width 0.5s ease-in-out;
+        }
+        .returnHome span{
+            display: none;
+            position: relative;
+            margin: 2px 0 0 10px;
+        }
+        .returnHome:hover span{
+            display: block;
+        }
+        .returnHome:hover{
+            cursor: pointer;
+            width: 100px;
+        }
+        .returnHome:hover svg{
+            fill: rgb(0,145,255);
+            transition: 0.5s ease-in-out all;
+        }
+        .exit{
+            margin: 10px 10px 0 0;
+            background-color: rgba(1, 1, 1, 0.6); 
+            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            padding: 0 10px;
+            transition: all 0.5s ease-in-out;
+            justify-content: space-around;
+            align-items: center;
+            cursor: pointer;
+        }
+        .exit:hover svg{
+            fill: red;
+            transition: 0.5s ease-in-out all;
+        }
+        .article{
+            min-width: 500px;
+            width: 500px;
+            position: relative;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(1, 1, 1, 0.85);
+        }
+        .article_frame{
+            width: 500px;
+            height: 100vh;
+        }
+        .close_article{
+            padding: 10px;
+            align-self: flex-end;
+        }
+    </style>
+    <div class="main-content">
+        <video autoplay muted loop class="video">
+            <source src="./assets/img/brain_anim.mp4" type="video/mp4">
+        </video>
+        <div class="glass"></div>
+        <div class="splash-container">
+            <div class="traingle-container">
+                
+            </div>
+            <div class="splash">
+                <p><img src="./assets/img/icon.png?format=webp" alt="icon" width="100" height="100"/><span>&nbsp;&nbsp;Brain3D</span></p>
+                <a href="#" title="Start" class="start"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                  </svg>&nbsp;Start</a>
+                  <div class="info">Informacje&nbsp;&nbsp;<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg></span></div>
+            </div>
+            <div class="about">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                  </svg>
+                <table>
+                    <tr>
+                        <td><img src="./assets/img/icon.png?format=webp" alt="icon" width="100" height="100"/></td>
+                        <td>Brain3D<br>Wersja 1.0.0 stable<br>Coprytight @2022 by authors for ZSME Żywiec</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><hr></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center" colspan="2"><br>Autorzy:</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center" colspan="2"><br><b>Inżynier&nbsp;oprogramowania</b>&nbsp;-&nbsp;Bartłomiej&nbsp;Białek</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center" colspan="2"><b>UI&nbsp;Design</b>&nbsp;-&nbsp;Mateusz Gołuch</td>
+                    </tr> 
+                    <tr>
+                        <td style="text-align:center" colspan="2"><b>Pomocnik&nbsp;inżyniera</b>&nbsp;-&nbsp;Krzysztof Król</td>
+                    </tr>   
+                    <tr>
+                        <td style="text-align:center" colspan="2"><b>Zawartość&nbsp;i&nbsp;materiały</b>&nbsp;-&nbsp;Kacper Kuś</td>
+                    </tr>   
+                    <tr>
+                        <td style="text-align:center" colspan="2"><br><br><br>Wykorzystane zasoby: </td>
+                    </tr>   
+                    <tr>
+                        <td colspan="2"><br><i>"Brain Project" - <u>(https://sketchfab.com/3d-models/brain-project-24ec03412dd8432bb0d3e750a72608e0)</u> <br>by Dean Lavery <u>(https://sketchfab.com/dean.lavery)</u></i></td>
+                    </tr>   
+                    <tr>
+                        <td colspan="2"><br><i>"HighPoly Info Sign (3D Icon)" - <u>(https://sketchfab.com/3d-models/highpoly-info-sign-3d-icon-d11a2951f1d24e458c6d5a6b3f79db73)</u> <br>by Alexander <u>(https://sketchfab.com/pravdin)</u></i></td>
+                    </tr>   
+                    <tr>
+                        <td colspan="2" style="text-align: right; font-weight: lighter"><br><br><br><i>Based on THREE.js</i></td>
+                    </tr>   
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <div class="returnHome" title="Start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </svg>
+            <span>Start&nbsp;&nbsp;</span>
+        </div>
+        <div class="exit" title="Zamknij">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-out" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+              </svg>
+        </div>
+    </div>
+    <div class="article">
+        <span class="close_article">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+            </svg>
+        </span>
+        <iframe src="#" class="article_frame"></iframe>
+    </div>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

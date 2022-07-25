@@ -1,0 +1,29 @@
+{
+  "name": "brain3d",
+  "version": "1.0.0",
+  "description": "Educational app with 3D interactive brain",
+  "main": "js/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kriskros17/mozg_projekt.git"
+  },
+  "keywords": [
+    "Brain",
+    "3D"
+  ],
+  "author": "ZSME",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kriskros17/mozg_projekt/issues"
+  },
+  "homepage": "https://github.com/kriskros17/mozg_projekt#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "electron": "^19.0.1",
+    "electron-packager": "^15.5.1"
+  }
+}

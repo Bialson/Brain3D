@@ -1,0 +1,1 @@
+electron-packager . Brain3D --overwrite --asar=true --platform=win32 --prune=true --version-string.CompanyName=ZSME --version-string.ProductName="Brain3D" --version-string.FileDescription="Educational app with 3D interactive brain" --icon="D:\Programowanie\Web Development\mozg_projekt\assets\img\icon.ico"      
