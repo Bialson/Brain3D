@@ -37,9 +37,9 @@ List the ready features here:
 
 ## Screenshots
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/78564805/182949201-4f2f1964-105c-4094-bffb-fc2107229a9d.png" width=450/>
+  <img src="https://user-images.githubusercontent.com/78564805/182949201-4f2f1964-105c-4094-bffb-fc2107229a9d.png" width=400/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://user-images.githubusercontent.com/78564805/182949321-472b6112-847c-430c-a6c2-48b8cbaf73cd.png" width=450/>
+  <img src="https://user-images.githubusercontent.com/78564805/182949321-472b6112-847c-430c-a6c2-48b8cbaf73cd.png" width=400/>
 </p>
 <!-- ![image width=300](https://user-images.githubusercontent.com/78564805/182949201-4f2f1964-105c-4094-bffb-fc2107229a9d.png)<br/>
 ![image](https://user-images.githubusercontent.com/78564805/182949321-472b6112-847c-430c-a6c2-48b8cbaf73cd.png) -->
